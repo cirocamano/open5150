@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="red" data-view="all">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OPEN5150 - High Gain Tube Amplifier & 3D Cab Studio</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- App Shell -->
+  <div class="app-shell">
+
+    <!-- Top Navigation Bar: Minimal Hardware & DAW Tape Deck -->
+    <header class="app-header">
+
+      <!-- Left: Logo & View Switch -->
+      <div class="header-left">
+        <div class="brand-group">
+          <span class="brand-name">OPEN<span class="brand-accent">5150</span></span>
+        </div>
+
+        <div class="view-switch">
+          <button class="view-btn active" data-view="all" id="btnViewAll">ALL</button>
+          <button class="view-btn" data-view="amp" id="btnViewAmp">AMP</button>
+          <button class="view-btn" data-view="cab" id="btnViewCab">CAB</button>
+        </div>
+      </div>
+
+      <!-- Center: Hardware Audio I/O & Latency Telemetry -->
+      <div class="telemetry-bar">
+        <div class="hw-item">
+          <span class="hw-label">IN</span>
+          <select id="selectInput" class="compact-select" title="Entrada de Audio (Guitarra)"></select>
+        </div>
+        <div class="hw-divider"></div>
+        <div class="hw-item">
+          <span class="hw-label">OUT</span>
+          <select id="selectOutput" class="compact-select" title="Salida de Audio"></select>
+        </div>
+        <div class="hw-divider"></div>
+        <div class="hw-item">
+          <span class="hw-label">BUF</span>
+          <select id="selectBuffer" class="compact-select buffer-select" title="Tamaño de Buffer DSP">
+            <option value="32">32 smp</option>
+            <option value="64" selected>64 smp</option>
+            <option value="128">128 smp</option>
+            <option value="256">256 smp</option>
+          </select>
+        </div>
+        <div class="latency-tag" id="lblLatency">1.33 ms</div>
+      </div>
+
+      <!-- Right: Lossless DAW Session Recorder -->
+      <div class="recorder-bar">
+        <button class="rec-btn" id="btnRecord" title="Iniciar/Detener Grabación WAV 24-bit">
+          <span class="rec-dot"></span>
+          <span id="lblRecText">REC</span>
+        </button>
+        <span class="rec-stopwatch" id="lblRecTimer">00:00.0</span>
+        <button class="icon-btn" id="btnOpenRecordings" title="Abrir carpeta de grabaciones en Finder">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+        </button>
+      </div>
+
+    </header>
+
+    <!-- Notification Toast -->
+    <div class="rec-toast" id="recToast">
+      <span class="toast-dot"></span>
+      <span class="toast-text" id="toastMsg">Take guardado</span>
+      <button class="toast-btn" id="btnToastReveal">Ver</button>
+    </div>
+
+    <!-- Main Workspace Container -->
+    <main class="workspace-container">
+
+      <!-- 1. The Amplifier Head (Faceplate & Controls) -->
+      <section class="amp-panel" id="ampSection">
+
+        <!-- Amp Top Bar: Channel Voicing, Bright Switch, Scope & Meters -->
+        <div class="amp-header-bar">
+
+          <div class="amp-header-left">
+            <!-- Mode Selector Switch -->
+            <div class="mode-selector">
+              <button class="mode-btn active" id="btnModeRed" data-channel="1" data-crunch="0">
+                <span class="mode-dot red"></span>
+                <span>RED LEAD</span>
+              </button>
+              <button class="mode-btn" id="btnModeCrunch" data-channel="0" data-crunch="1">
+                <span class="mode-dot green"></span>
+                <span>GREEN CRUNCH</span>
+              </button>
+              <button class="mode-btn" id="btnModeClean" data-channel="0" data-crunch="0">
+                <span class="mode-dot cyan"></span>
+                <span>GREEN CLEAN</span>
+              </button>
+            </div>
+
+            <!-- Bright Switch (Green channel only) -->
+            <button class="bright-toggle" id="btnBright" style="display: none;" title="Realce de agudos +6dB">
+              <span>BRIGHT +6dB</span>
+            </button>
+          </div>
+
+          <!-- Fixed-Width Signal Scope & Meters (Zero Width Fluctuation) -->
+          <div class="meter-panel">
+            <canvas id="scopeCanvas" width="130" height="26"></canvas>
+
+            <div class="hud-meters">
+              <div class="hud-row">
+                <span class="hud-lbl">IN</span>
+                <div class="hud-track"><div class="hud-fill in" id="hudBarIn"></div></div>
+                <span class="hud-val" id="hudValIn">-inf</span>
+              </div>
+              <div class="hud-row">
+                <span class="hud-lbl">OUT</span>
+                <div class="hud-track"><div class="hud-fill out" id="hudBarOut"></div></div>
+                <span class="hud-val" id="hudValOut">-inf</span>
+              </div>
+            </div>
+
+            <div class="gate-indicator">
+              <span class="gate-tag">GATE</span>
+              <span class="gate-badge closed" id="gatePill">MUTE</span>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Minimalist Rotary Dials Matrix (8 precision controls) -->
+        <div class="dials-row">
+
+          <!-- GATE -->
+          <div class="dial-cell">
+            <span class="dial-section-tag">GATE</span>
+            <div class="dial-widget" data-id="gateThreshold" data-min="-80.0" data-max="-20.0" data-default="-55.0" data-step="0.5" data-unit="dB" title="Umbral de compuerta">
+              <svg class="dial-svg" viewBox="0 0 100 100">
+                <circle class="dial-track" cx="50" cy="50" r="40"></circle>
+                <circle class="dial-fill" cx="50" cy="50" r="40"></circle>
+                <circle class="dial-knob" cx="50" cy="50" r="28"></circle>
+                <line class="dial-needle" x1="50" y1="50" x2="50" y2="24"></line>
+              </svg>
+              <div class="dial-center-val">-55.0</div>
+            </div>
+            <span class="dial-label">THRESH</span>
+          </div>
+
+          <div class="dial-divider"></div>
+
+          <!-- PREAMP GAIN -->
+          <div class="dial-cell">
+            <span class="dial-section-tag">PREAMP</span>
+            <div class="dial-widget" data-id="preGain" data-min="0.0" data-max="10.0" data-default="5.0" data-step="0.1" data-unit="" title="Ganancia Preamp">
+              <svg class="dial-svg" viewBox="0 0 100 100">
+                <circle class="dial-track" cx="50" cy="50" r="40"></circle>
+                <circle class="dial-fill" cx="50" cy="50" r="40"></circle>
+                <circle class="dial-knob" cx="50" cy="50" r="28"></circle>
+                <line class="dial-needle" x1="50" y1="50" x2="50" y2="24"></line>
+              </svg>
+              <div class="dial-center-val">5.0</div>
+            </div>
+            <span class="dial-label">PRE GAIN</span>
+          </div>
+
+          <div class="dial-divider"></div>
+
+          <!-- TONE STACK: BASS, MID, TREBLE -->
+          <div class="dial-cell">
+            <span class="dial-section-tag">LOW</span>
+            <div class="dial-widget" data-id="bass" data-min="0.0" data-max="10.0" data-default="5.0" data-step="0.1" data-unit="" title="Graves">
+              <svg class="dial-svg" viewBox="0 0 100 100">
+                <circle class="dial-track" cx="50" cy="50" r="40"></circle>
+                <circle class="dial-fill" cx="50" cy="50" r="40"></circle>
+                <circle class="dial-knob" cx="50" cy="50" r="28"></circle>
+                <line class="dial-needle" x1="50" y1="50" x2="50" y2="24"></line>
+              </svg>
+              <div class="dial-center-val">5.0</div>
+            </div>
+            <span class="dial-label">BASS</span>
+          </div>
+
+          <div class="dial-cell">
+            <span class="dial-section-tag">MID</span>
+            <div class="dial-widget" data-id="mid" data-min="0.0" data-max="10.0" data-default="5.0" data-step="0.1" data-unit="" title="Medios">
+              <svg class="dial-svg" viewBox="0 0 100 100">
+                <circle class="dial-track" cx="50" cy="50" r="40"></circle>
+                <circle class="dial-fill" cx="50" cy="50" r="40"></circle>
+                <circle class="dial-knob" cx="50" cy="50" r="28"></circle>
+                <line class="dial-needle" x1="50" y1="50" x2="50" y2="24"></line>
+              </svg>
+              <div class="dial-center-val">5.0</div>
+            </div>
+            <span class="dial-label">MID</span>
+          </div>
+
+          <div class="dial-cell">
+            <span class="dial-section-tag">HIGH</span>
+            <div class="dial-widget" data-id="treble" data-min="0.0" data-max="10.0" data-default="5.0" data-step="0.1" data-unit="" title="Agudos">
+              <svg class="dial-svg" viewBox="0 0 100 100">
+                <circle class="dial-track" cx="50" cy="50" r="40"></circle>
+                <circle class="dial-fill" cx="50" cy="50" r="40"></circle>
+                <circle class="dial-knob" cx="50" cy="50" r="28"></circle>
+                <line class="dial-needle" x1="50" y1="50" x2="50" y2="24"></line>
+              </svg>
+              <div class="dial-center-val">5.0</div>
+            </div>
+            <span class="dial-label">TREBLE</span>
+          </div>
+
+          <div class="dial-divider"></div>
+
+          <!-- POST GAIN (Master Volume) -->
+          <div class="dial-cell">
+            <span class="dial-section-tag">MASTER</span>
+            <div class="dial-widget" data-id="postGain" data-min="0.0" data-max="10.0" data-default="3.0" data-step="0.1" data-unit="" title="Volumen Master">
+              <svg class="dial-svg" viewBox="0 0 100 100">
+                <circle class="dial-track" cx="50" cy="50" r="40"></circle>
+                <circle class="dial-fill" cx="50" cy="50" r="40"></circle>
+                <circle class="dial-knob" cx="50" cy="50" r="28"></circle>
+                <line class="dial-needle" x1="50" y1="50" x2="50" y2="24"></line>
+              </svg>
+              <div class="dial-center-val">3.0</div>
+            </div>
+            <span class="dial-label">POST GAIN</span>
+          </div>
+
+          <div class="dial-divider"></div>
+
+          <!-- POWER AMP DAMPING -->
+          <div class="dial-cell">
+            <span class="dial-section-tag">SUB</span>
+            <div class="dial-widget" data-id="resonance" data-min="0.0" data-max="10.0" data-default="5.0" data-step="0.1" data-unit="" title="Resonancia">
+              <svg class="dial-svg" viewBox="0 0 100 100">
+                <circle class="dial-track" cx="50" cy="50" r="40"></circle>
+                <circle class="dial-fill" cx="50" cy="50" r="40"></circle>
+                <circle class="dial-knob" cx="50" cy="50" r="28"></circle>
+                <line class="dial-needle" x1="50" y1="50" x2="50" y2="24"></line>
+              </svg>
+              <div class="dial-center-val">5.0</div>
+            </div>
+            <span class="dial-label">RESONANCE</span>
+          </div>
+
+          <div class="dial-cell">
+            <span class="dial-section-tag">AIR</span>
+            <div class="dial-widget" data-id="presence" data-min="0.0" data-max="10.0" data-default="5.0" data-step="0.1" data-unit="" title="Presencia">
+              <svg class="dial-svg" viewBox="0 0 100 100">
+                <circle class="dial-track" cx="50" cy="50" r="40"></circle>
+                <circle class="dial-fill" cx="50" cy="50" r="40"></circle>
+                <circle class="dial-knob" cx="50" cy="50" r="28"></circle>
+                <line class="dial-needle" x1="50" y1="50" x2="50" y2="24"></line>
+              </svg>
+              <div class="dial-center-val">5.0</div>
+            </div>
+            <span class="dial-label">PRESENCE</span>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- 2. Studio Cabinet & Acoustic 3D Radar (Horizontal Strip) -->
+      <section class="cab-panel" id="cabSection">
+
+        <!-- Column 1: Cabinet Selection & Filters -->
+        <div class="cab-card cab-model-col">
+          <div class="cab-card-header">
+            <span class="card-title">GABINETE & IR</span>
+            <button class="cab-power-toggle" id="btnCabPower" title="Activar/Bypasear simulación de cabina">
+              <span class="power-lamp"></span>
+              <span class="power-text">BYPASS</span>
+            </button>
+          </div>
+
+          <div class="cab-select-group">
+            <button class="btn-browse-ir" id="btnBrowseIr">Cargar IR WAV…</button>
+          </div>
+
+          <div class="cab-desc-text" id="cabDesc">Sin IR cargada. Selecciona un archivo WAV propio.</div>
+
+          <div class="filters-row">
+            <div class="filter-item">
+              <div class="filter-header">
+                <span class="filter-name">LOW CUT</span>
+                <span class="filter-val" id="valLowCut">75 Hz</span>
+              </div>
+              <input type="range" class="flat-slider" id="sliderLowCut" min="20" max="250" value="75" step="1">
+            </div>
+            <div class="filter-item">
+              <div class="filter-header">
+                <span class="filter-name">HIGH CUT</span>
+                <span class="filter-val" id="valHighCut">11.5 kHz</span>
+              </div>
+              <input type="range" class="flat-slider" id="sliderHighCut" min="4000" max="20000" value="11500" step="100">
+            </div>
+          </div>
+        </div>
+
+        <!-- Column 2: Microphone & 3D Axis -->
+        <div class="cab-card cab-mic-col">
+          <div class="cab-card-header">
+            <span class="card-title">MICRÓFONO & EJE 3D</span>
+          </div>
+
+          <div class="mic-group">
+            <button class="mic-btn active" data-mic="0">
+              <span class="mic-code">SM57</span>
+              <span class="mic-type">Dynamic</span>
+            </button>
+            <button class="mic-btn" data-mic="1">
+              <span class="mic-code">MD421</span>
+              <span class="mic-type">Punch</span>
+            </button>
+            <button class="mic-btn" data-mic="2">
+              <span class="mic-code">R-121</span>
+              <span class="mic-type">Ribbon</span>
+            </button>
+          </div>
+
+          <div class="axis-group">
+            <div class="axis-item">
+              <div class="axis-header">
+                <span class="axis-label">DISTANCIA (Z)</span>
+                <span class="axis-readout" id="valDistance">1.5 cm</span>
+              </div>
+              <input type="range" class="flat-slider" id="sliderDistance" min="0.0" max="1.0" value="0.15" step="0.01">
+            </div>
+
+            <div class="axis-item">
+              <span class="axis-label">EJE CAPTACIÓN</span>
+              <div class="angle-group">
+                <button class="angle-btn active" id="btnAngle0">0° ON-AXIS</button>
+                <button class="angle-btn" id="btnAngle45">45° OFF-AXIS</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Column 3: 2D Speaker Cone Radar -->
+        <div class="cab-card cab-radar-col">
+          <div class="cab-card-header">
+            <span class="card-title">RADAR 2D</span>
+          </div>
+
+          <div class="radar-wrapper">
+            <div class="radar-pad" id="conePad" title="Arrastra el micrófono sobre el cono">
+              <div class="speaker-cone-art">
+                <div class="cone-ring ring-3"></div>
+                <div class="cone-ring ring-2"></div>
+                <div class="cone-ring ring-1"></div>
+                <div class="dust-cap"></div>
+                <div class="crosshair-h"></div>
+                <div class="crosshair-v"></div>
+              </div>
+
+              <!-- Draggable Mic Target -->
+              <div class="mic-target" id="micTarget">
+                <div class="target-dot"></div>
+              </div>
+            </div>
+
+            <div class="target-tag" id="micTag">Cap-Edge ★</div>
+          </div>
+        </div>
+
+      </section>
+
+    </main>
+
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

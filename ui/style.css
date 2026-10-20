@@ -1,0 +1,1026 @@
+/* OPEN5150 - High Gain Precision Tube Amplifier & 3D Cab Studio
+   Theme: Minimalist Flat Dark Hardware Architecture (No Glassmorphism) */
+
+:root {
+  --bg-deep: #111215;
+  --panel-bg: #18191e;
+  --card-bg: #14151a;
+  --card-border: #24262e;
+  --border-light: #2e303b;
+  --text-main: #f0f2f5;
+  --text-muted: #8e93a0;
+  --text-dim: #555a66;
+
+  /* Channel Accents (Solid Flat Colors, No Glow) */
+  --accent: #e53935;
+  --accent-dim: rgba(229, 57, 53, 0.12);
+  --accent-text: #ff8a80;
+
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', SFMono-Regular, Menlo, monospace;
+}
+
+html[data-theme="crunch"] {
+  --accent: #10b981;
+  --accent-dim: rgba(16, 185, 129, 0.12);
+  --accent-text: #a7f3d0;
+}
+
+html[data-theme="clean"] {
+  --accent: #0284c7;
+  --accent-dim: rgba(2, 132, 199, 0.12);
+  --accent-text: #7dd3fc;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+html, body {
+  background: var(--bg-deep);
+  color: var(--text-main);
+  font-family: var(--font-sans);
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+
+.app-shell {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+
+/* =============================================================================
+   1. Flat Top Header (38px, Fixed)
+   ============================================================================= */
+.app-header {
+  height: 38px;
+  padding: 0 12px;
+  background: #17181c;
+  border-bottom: 1px solid var(--card-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+  gap: 12px;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.brand-group {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.brand-name {
+  font-size: 0.98rem;
+  font-weight: 800;
+  letter-spacing: -0.3px;
+  color: #ffffff;
+}
+
+.brand-accent {
+  color: var(--accent);
+  margin-left: 1px;
+}
+
+/* View Switcher: ALL / AMP / CAB */
+.view-switch {
+  display: flex;
+  background: #121317;
+  padding: 2px;
+  border-radius: 4px;
+  border: 1px solid var(--card-border);
+  gap: 2px;
+}
+
+.view-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.view-btn:hover {
+  color: #fff;
+}
+
+.view-btn.active {
+  background: #252731;
+  color: #fff;
+}
+
+/* Telemetry & Device Selectors */
+.telemetry-bar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #131418;
+  padding: 2px 6px;
+  border-radius: 4px;
+  border: 1px solid var(--card-border);
+}
+
+.hw-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.hw-label {
+  font-family: var(--font-mono);
+  font-size: 0.56rem;
+  font-weight: 700;
+  color: var(--text-dim);
+  background: #1c1d24;
+  padding: 1px 3px;
+  border-radius: 2px;
+}
+
+.hw-divider {
+  width: 1px;
+  height: 12px;
+  background: var(--card-border);
+}
+
+.compact-select {
+  background: transparent;
+  color: var(--text-main);
+  border: none;
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  font-weight: 500;
+  padding: 2px 4px;
+  outline: none;
+  cursor: pointer;
+  max-width: 130px;
+}
+
+.compact-select.buffer-select {
+  max-width: 70px;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--accent-text);
+}
+
+.compact-select option {
+  background: #18191e;
+  color: #fff;
+}
+
+.latency-tag {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  font-weight: 700;
+  color: #10b981;
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid #10b981;
+  padding: 1px 5px;
+  border-radius: 3px;
+  letter-spacing: 0.3px;
+}
+
+/* Recorder Bar */
+.recorder-bar {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: #131418;
+  padding: 2px 6px;
+  border-radius: 4px;
+  border: 1px solid var(--card-border);
+}
+
+.rec-btn {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(229, 57, 53, 0.1);
+  border: 1px solid #e53935;
+  color: #e53935;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.rec-btn:hover {
+  background: rgba(229, 57, 53, 0.2);
+}
+
+.rec-btn.recording {
+  background: #e53935;
+  color: #fff;
+}
+
+.rec-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #e53935;
+}
+
+.rec-btn.recording .rec-dot {
+  background: #fff;
+}
+
+.rec-stopwatch {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  width: 48px;
+  text-align: center;
+}
+
+.rec-stopwatch.active {
+  color: #e53935;
+  font-weight: 700;
+}
+
+.icon-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 2px 3px;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-btn:hover {
+  color: #fff;
+  background: #252731;
+}
+
+/* Toast */
+.rec-toast {
+  position: fixed;
+  bottom: 12px;
+  right: 12px;
+  background: #1c1d24;
+  border: 1px solid var(--card-border);
+  padding: 6px 10px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  z-index: 1000;
+  opacity: 0;
+  transform: translateY(8px);
+  pointer-events: none;
+  transition: opacity 0.2s, transform 0.2s;
+}
+
+.rec-toast.show {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.toast-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #10b981;
+}
+
+.toast-text {
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: var(--text-main);
+}
+
+.toast-btn {
+  background: #282a34;
+  border: 1px solid var(--border-light);
+  color: #fff;
+  font-size: 0.62rem;
+  font-weight: 600;
+  padding: 1px 5px;
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+/* =============================================================================
+   2. Workspace Container (Zero Scrollbars, Fixed)
+   ============================================================================= */
+.workspace-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 6px 10px 8px;
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+
+/* View Switcher States */
+html[data-view="amp"] #cabSection {
+  display: none !important;
+}
+html[data-view="amp"] #ampSection {
+  flex: 1;
+  justify-content: center;
+}
+html[data-view="cab"] #ampSection {
+  display: none !important;
+}
+html[data-view="cab"] #cabSection {
+  flex: 1;
+}
+
+/* =============================================================================
+   3. Amplifier Head Panel
+   ============================================================================= */
+.amp-panel {
+  background: var(--panel-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 6px;
+  padding: 8px 12px 10px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.amp-header-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--card-border);
+  gap: 8px;
+}
+
+.amp-header-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Mode Selector Switch */
+.mode-selector {
+  display: flex;
+  background: #121317;
+  padding: 2px;
+  border-radius: 4px;
+  border: 1px solid var(--card-border);
+  gap: 2px;
+}
+
+.mode-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-family: var(--font-sans);
+  font-size: 0.68rem;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 3px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: background 0.15s, color 0.15s;
+}
+
+.mode-btn:hover {
+  color: #fff;
+}
+
+.mode-btn.active {
+  background: #252731;
+  color: #fff;
+}
+
+.mode-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  opacity: 0.4;
+}
+
+.mode-dot.red { background: #e53935; }
+.mode-dot.green { background: #10b981; }
+.mode-dot.cyan { background: #0284c7; }
+
+.mode-btn.active .mode-dot {
+  opacity: 1;
+}
+
+.bright-toggle {
+  background: #121317;
+  border: 1px solid var(--card-border);
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  font-weight: 700;
+  padding: 3px 7px;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.bright-toggle.on {
+  background: rgba(16, 185, 129, 0.15);
+  color: #10b981;
+  border-color: #10b981;
+}
+
+/* =============================================================================
+   Strict Fixed-Width Meter Panel (Zero Layout Shift)
+   ============================================================================= */
+.meter-panel {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #131418;
+  padding: 3px 6px;
+  border-radius: 4px;
+  border: 1px solid var(--card-border);
+  width: 320px;
+  flex: 0 0 320px;
+  justify-content: space-between;
+}
+
+#scopeCanvas {
+  background: #0d0e11;
+  border-radius: 2px;
+  border: 1px solid var(--card-border);
+  display: block;
+  width: 130px;
+  height: 26px;
+  flex: 0 0 130px;
+}
+
+.hud-meters {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  width: 110px;
+  flex: 0 0 110px;
+}
+
+.hud-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.hud-lbl {
+  font-family: var(--font-mono);
+  font-size: 0.54rem;
+  font-weight: 700;
+  color: var(--text-dim);
+  width: 20px;
+  flex: 0 0 20px;
+}
+
+.hud-track {
+  width: 48px;
+  height: 4px;
+  background: #1c1e26;
+  border-radius: 1px;
+  overflow: hidden;
+  flex: 0 0 48px;
+}
+
+.hud-fill {
+  height: 100%;
+  width: 0%;
+  border-radius: 1px;
+}
+
+.hud-fill.in { background: #0284c7; }
+.hud-fill.out { background: var(--accent); }
+
+.hud-val {
+  font-family: var(--font-mono);
+  font-size: 0.54rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  width: 38px;
+  flex: 0 0 38px;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.gate-indicator {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+  width: 38px;
+  flex: 0 0 38px;
+}
+
+.gate-tag {
+  font-family: var(--font-mono);
+  font-size: 0.48rem;
+  font-weight: 700;
+  color: var(--text-dim);
+}
+
+.gate-badge {
+  font-family: var(--font-mono);
+  font-size: 0.52rem;
+  font-weight: 700;
+  padding: 1px 3px;
+  border-radius: 2px;
+  width: 34px;
+  text-align: center;
+  letter-spacing: 0.2px;
+}
+
+.gate-badge.open {
+  background: rgba(16, 185, 129, 0.15);
+  color: #10b981;
+  border: 1px solid #10b981;
+}
+
+.gate-badge.closed {
+  background: rgba(229, 57, 53, 0.15);
+  color: #e53935;
+  border: 1px solid #e53935;
+}
+
+/* =============================================================================
+   4. Flat Rotary Dials Matrix
+   ============================================================================= */
+.dials-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2px;
+}
+
+.dial-cell {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  background: #14151a;
+  border: 1px solid var(--card-border);
+  padding: 5px 2px 6px;
+  border-radius: 4px;
+  min-width: 0;
+}
+
+.dial-section-tag {
+  font-family: var(--font-mono);
+  font-size: 0.5rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: var(--text-dim);
+}
+
+.dial-divider {
+  width: 1px;
+  height: 52px;
+  background: var(--card-border);
+  margin: 0 1px;
+  flex-shrink: 0;
+}
+
+.dial-widget {
+  position: relative;
+  width: 50px;
+  height: 50px;
+  cursor: ns-resize;
+}
+
+.dial-svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.dial-track {
+  fill: none;
+  stroke: #252731;
+  stroke-width: 5;
+  stroke-dasharray: 188.5 252;
+  stroke-dashoffset: 0;
+  stroke-linecap: round;
+  transform: rotate(135deg);
+  transform-origin: 50px 50px;
+}
+
+.dial-fill {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 5.5;
+  stroke-dasharray: 188.5 252;
+  stroke-dashoffset: 188.5;
+  stroke-linecap: round;
+  transform: rotate(135deg);
+  transform-origin: 50px 50px;
+}
+
+.dial-knob {
+  fill: #181920;
+  stroke: var(--card-border);
+  stroke-width: 1.5;
+}
+
+.dial-needle {
+  stroke: var(--accent);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  transform-origin: 50px 50px;
+}
+
+.dial-center-val {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: #fff;
+  pointer-events: none;
+  font-variant-numeric: tabular-nums;
+}
+
+.dial-label {
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  color: #cbd5e1;
+  text-align: center;
+  white-space: nowrap;
+}
+
+/* =============================================================================
+   5. Studio Cabinet & Acoustic Radar Section
+   ============================================================================= */
+.cab-panel {
+  background: var(--panel-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 6px;
+  padding: 8px 10px;
+  display: grid;
+  grid-template-columns: 1.15fr 1fr 126px;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.cab-card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 4px;
+  padding: 6px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  min-width: 0;
+}
+
+.cab-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.card-title {
+  font-family: var(--font-mono);
+  font-size: 0.56rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: var(--text-dim);
+  text-transform: uppercase;
+}
+
+.cab-power-toggle {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: #131418;
+  border: 1px solid var(--card-border);
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.56rem;
+  font-weight: 700;
+  padding: 1px 6px;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.cab-power-toggle.active {
+  background: rgba(16, 185, 129, 0.12);
+  border-color: #10b981;
+  color: #10b981;
+}
+
+.power-lamp {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #444;
+}
+
+.cab-power-toggle.active .power-lamp {
+  background: #10b981;
+}
+
+.full-width {
+  width: 100%;
+  max-width: 100%;
+  background: #181920;
+  border: 1px solid var(--card-border);
+  border-radius: 3px;
+  padding: 3px 5px;
+  font-size: 0.7rem;
+}
+
+.btn-browse-ir {
+  margin-top: 3px;
+  width: 100%;
+  background: #1c1d25;
+  border: 1px solid var(--border-light);
+  color: #fff;
+  font-size: 0.62rem;
+  font-weight: 600;
+  padding: 3px;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.cab-desc-text {
+  font-size: 0.6rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.2;
+}
+
+/* Cut Filters */
+.filters-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  margin-top: auto;
+  padding-top: 4px;
+  border-top: 1px solid var(--card-border);
+}
+
+.filter-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.filter-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.filter-name {
+  font-size: 0.54rem;
+  font-weight: 700;
+  color: var(--text-dim);
+}
+
+.filter-val {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  font-weight: 600;
+  color: var(--accent-text);
+  font-variant-numeric: tabular-nums;
+}
+
+.flat-slider {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 3px;
+  background: #252731;
+  border-radius: 1px;
+  outline: none;
+  cursor: pointer;
+}
+
+.flat-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  background: #fff;
+  border: 1px solid var(--accent);
+  cursor: pointer;
+}
+
+/* Mic Column */
+.mic-group {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4px;
+}
+
+.mic-btn {
+  background: #181920;
+  border: 1px solid var(--card-border);
+  border-radius: 4px;
+  padding: 3px 2px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+}
+
+.mic-btn:hover {
+  border-color: var(--border-light);
+}
+
+.mic-btn.active {
+  background: var(--accent-dim);
+  border-color: var(--accent);
+}
+
+.mic-code {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.mic-type {
+  font-size: 0.52rem;
+  color: var(--text-muted);
+}
+
+/* Axis Controls */
+.axis-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-top: auto;
+}
+
+.axis-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.axis-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.axis-label {
+  font-size: 0.54rem;
+  font-weight: 700;
+  color: var(--text-dim);
+}
+
+.axis-readout {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  font-weight: 600;
+  color: var(--accent-text);
+  font-variant-numeric: tabular-nums;
+}
+
+.angle-group {
+  display: flex;
+  gap: 3px;
+}
+
+.angle-btn {
+  flex: 1;
+  background: #181920;
+  border: 1px solid var(--card-border);
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.56rem;
+  font-weight: 600;
+  padding: 2px 1px;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.angle-btn.active {
+  background: var(--accent-dim);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+/* Radar Column */
+.radar-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  margin: auto 0;
+}
+
+.radar-pad {
+  position: relative;
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  background: #0f1013;
+  border: 1px solid var(--card-border);
+  cursor: crosshair;
+  overflow: hidden;
+}
+
+.speaker-cone-art {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cone-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px dashed #20222a;
+}
+
+.ring-3 { width: 82px; height: 82px; }
+.ring-2 { width: 56px; height: 56px; }
+.ring-1 { width: 30px; height: 30px; }
+
+.dust-cap {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #1c1d25;
+  border: 1px solid #282a34;
+}
+
+.crosshair-h {
+  position: absolute;
+  width: 100%;
+  height: 1px;
+  background: #1a1b22;
+}
+
+.crosshair-v {
+  position: absolute;
+  height: 100%;
+  width: 1px;
+  background: #1a1b22;
+}
+
+.mic-target {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.target-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent);
+  border: 1.5px solid #fff;
+}
+
+.target-tag {
+  font-family: var(--font-mono);
+  font-size: 0.52rem;
+  font-weight: 700;
+  color: #fff;
+  background: #181920;
+  border: 1px solid var(--card-border);
+  padding: 1px 4px;
+  border-radius: 2px;
+  white-space: nowrap;
+}
