@@ -150,6 +150,10 @@ Para eliminar los archivos de compilación:
 make clean
 ```
 
+## Sitio web
+
+La landing está en [`docs/`](docs/index.html), escrita en HTML, CSS y JavaScript sin dependencias. Puedes abrir `docs/index.html` directamente en el navegador. Para alojarla en GitHub Pages, utiliza la rama `main` y la carpeta `/docs` como origen.
+
 ## Contribuir
 
 Consulta [CONTRIBUTING.md](CONTRIBUTING.md) para preparar el entorno, ejecutar las pruebas y proponer cambios.
