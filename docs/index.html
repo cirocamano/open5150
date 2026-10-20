@@ -4,11 +4,11 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#111215">
-  <meta name="description" content="OPEN5150. Un simulador inspirado en el 5150 para macOS, AU y VST3. Tres canales, alta ganancia e IR de cabina propias. Explora el proyecto en GitHub.">
-  <meta property="og:title" content="OPEN5150 — Haz ruido.">
-  <meta property="og:description" content="El carácter del 5150. Tu guitarra. Tu cabina. Código abierto para macOS, AU y VST3.">
+  <meta name="description" content="Simulador de amplificador inspirado en el 5150 para macOS. Aplicación independiente, AU y VST3, con tres modos y carga de IR WAV. Código e instalación en GitHub.">
+  <meta property="og:title" content="OPEN5150 — Simulador de amplificador para macOS">
+  <meta property="og:description" content="Sonidos limpios, crunch y alta ganancia. Usa OPEN5150 como aplicación o plugin AU y VST3.">
   <meta property="og:type" content="website">
-  <title>OPEN5150 — Haz ruido.</title>
+  <title>OPEN5150 — Simulador de amplificador para macOS</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="style.css">
   <script src="app.js" defer></script>
@@ -16,100 +16,85 @@
 <body>
   <a class="skip-link" href="#main">Saltar al contenido</a>
   <header class="site-header shell">
-    <a class="wordmark" href="#" aria-label="OPEN5150, inicio">OPEN<span>5150</span><i aria-hidden="true">AMP</i></a>
+    <a class="wordmark" href="#" aria-label="OPEN5150, inicio">OPEN<span>5150</span></a>
     <nav aria-label="Navegación principal">
-      <a class="nav-detail" href="#sonido">El sonido</a>
-      <a class="nav-detail" href="#formatos">Formatos</a>
-      <a class="nav-github" href="https://github.com/cirocamano/open5150">GitHub <span aria-hidden="true">↗</span></a>
+      <a href="#sonido">Canales</a>
+      <a href="#formatos">Formatos</a>
+      <a href="https://github.com/cirocamano/open5150">GitHub <span aria-hidden="true">↗</span></a>
     </nav>
   </header>
 
   <main id="main">
     <section class="hero shell" aria-labelledby="hero-title">
       <div class="hero-copy">
-        <p class="eyebrow"><span class="status-dot" aria-hidden="true"></span> SIMULADOR DE AMPLIFICADOR / VOL. 001</p>
-        <h1 id="hero-title">HECHO PARA<br>HACER <span>RUIDO.</span></h1>
-        <p class="hero-description">El carácter del 5150, en tu equipo. De un limpio con cuerpo a la alta ganancia que pide un riff más.</p>
-        <a class="button button-dark" href="https://github.com/cirocamano/open5150">Explorar en GitHub <span aria-hidden="true">↗</span></a>
-        <p class="hero-note">Código abierto. Tu guitarra pone las reglas.</p>
+        <h1 id="hero-title">El carácter del 5150.<br><span>En tu Mac.</span></h1>
+        <p class="hero-description">Un simulador de amplificador para tocar con tu guitarra o integrarla en una sesión. Sonidos limpios, crunch y alta ganancia, con tu propia IR de cabina.</p>
+        <a class="button" href="https://github.com/cirocamano/open5150">Ver proyecto en GitHub <span aria-hidden="true">↗</span></a>
+        <p class="hero-note">Para macOS · Aplicación, AU y VST3<br>Instalación mediante compilación del código fuente.</p>
       </div>
-
-      <div class="amp-stage" data-mode="lead">
-        <div class="stage-label"><span>01 / EL CABEZAL</span><span>INSPIRADO EN EL 5150</span></div>
-        <div class="amp-shadow" aria-hidden="true"></div>
-        <div class="amp" role="img" aria-label="Ilustración de un cabezal OPEN5150 con rejilla, controles y piloto de canal">
-          <div class="amp-handle" aria-hidden="true"></div>
-          <div class="amp-body">
-            <div class="amp-grille"><span class="grille-wordmark">OPEN<span>5150</span></span><span class="grille-tag">AMPLIFICACIÓN DE ALTA GANANCIA</span></div>
-            <div class="amp-panel">
-              <div class="input-jack"><span></span><small>INPUT</small></div>
-              <div class="amp-controls" aria-hidden="true">
-                <div class="control"><i style="--turn:-42deg"></i><small>PRE</small></div>
-                <div class="control"><i style="--turn:25deg"></i><small>LOW</small></div>
-                <div class="control"><i style="--turn:-18deg"></i><small>MID</small></div>
-                <div class="control"><i style="--turn:40deg"></i><small>HIGH</small></div>
-                <div class="control"><i style="--turn:-55deg"></i><small>POST</small></div>
-                <div class="control"><i style="--turn:12deg"></i><small>RES</small></div>
-                <div class="control"><i style="--turn:32deg"></i><small>PRES</small></div>
-              </div>
-              <div class="power-switch"><span class="amp-led"></span><i></i><small>POWER</small></div>
-            </div>
-            <span class="screw screw-tl"></span><span class="screw screw-tr"></span><span class="screw screw-bl"></span><span class="screw screw-br"></span>
-          </div>
-          <div class="amp-feet" aria-hidden="true"><i></i><i></i></div>
-        </div>
-        <div class="stage-caption"><span class="caption-line"></span><span>UN CLÁSICO. OTRA FORMA DE TOCARLO.</span></div>
-      </div>
+      <figure class="product-preview">
+        <a href="assets/interface.png" target="_blank" rel="noopener" aria-label="Abrir captura ampliada de la interfaz de OPEN5150 en una pestaña nueva">
+          <img src="assets/interface.png" width="1200" height="380" alt="Interfaz de OPEN5150: selección de canal, controles del amplificador, cargador de IR WAV y ajustes de micrófono.">
+        </a>
+        <figcaption>Interfaz de la aplicación independiente. Selecciona la imagen para ampliarla.</figcaption>
+      </figure>
     </section>
-
-    <div class="format-strip" aria-label="Disponible para macOS como aplicación, AU y VST3">
-      <div class="shell"><span>CONECTA. SUBE EL VOLUMEN.</span><span>macOS</span><span>APLICACIÓN</span><span>AU</span><span>VST3</span><span class="strip-mark" aria-hidden="true">✳</span></div>
-    </div>
 
     <section class="channels shell section-space" id="sonido" aria-labelledby="channels-title">
-      <div class="section-heading"><p class="eyebrow">01 — ENCUENTRA TU SONIDO</p><h2 id="channels-title">TRES CARAS.<br>EL MISMO <em>CARÁCTER.</em></h2></div>
+      <div class="section-heading">
+        <h2 id="channels-title">Un amplificador.<br>Tres modos de tocar.</h2>
+        <p>Elige un canal para conocer su carácter. Ajusta Pre Gain, Post Gain y la ecualización para darle forma a tu sonido.</p>
+      </div>
       <div class="channel-explorer">
-        <div class="channel-options" role="group" aria-label="Explorar los canales del amplificador">
-          <button class="channel-button" type="button" data-channel="lead" aria-pressed="true"><span class="channel-dot lead"></span><span>RED LEAD</span><span class="channel-number">01</span></button>
-          <button class="channel-button" type="button" data-channel="crunch" aria-pressed="false"><span class="channel-dot crunch"></span><span>GREEN CRUNCH</span><span class="channel-number">02</span></button>
-          <button class="channel-button" type="button" data-channel="clean" aria-pressed="false"><span class="channel-dot clean"></span><span>GREEN CLEAN</span><span class="channel-number">03</span></button>
+        <div class="channel-options" role="group" aria-label="Conocer los canales del amplificador">
+          <button type="button" data-channel="lead" aria-pressed="true" aria-controls="channel-story"><span class="channel-dot lead" aria-hidden="true"></span>Red Lead</button>
+          <button type="button" data-channel="crunch" aria-pressed="false" aria-controls="channel-story"><span class="channel-dot crunch" aria-hidden="true"></span>Green Crunch</button>
+          <button type="button" data-channel="clean" aria-pressed="false" aria-controls="channel-story"><span class="channel-dot clean" aria-hidden="true"></span>Green Clean</button>
         </div>
-        <div class="channel-story" aria-live="polite" aria-atomic="true">
-          <p class="eyebrow" id="channel-kicker">01 / ALTA GANANCIA</p>
-          <h3 id="channel-title">Un riff más.<br>Y otro más.</h3>
-          <p id="channel-description">Ganancia, sustain y una voz hecha para riffs pesados y leads al frente. Sube el Pre y encuentra tu punto de saturación.</p>
-          <span class="channel-footnote">Explora el carácter de cada canal.</span>
+        <div class="channel-story" id="channel-story" data-mode="lead" aria-live="polite" aria-atomic="true">
+          <h3 id="channel-title">Alta ganancia</h3>
+          <p id="channel-description">Para riffs pesados y solos con sustain. Ajusta Pre Gain para encontrar el nivel de saturación y Post Gain para controlar la salida.</p>
         </div>
       </div>
     </section>
 
-    <section class="signal-section" aria-labelledby="signal-title">
-      <div class="shell signal-inner">
-        <div><p class="eyebrow">02 — TU CADENA, TU SONIDO</p><h2 id="signal-title">TÚ ELIGES<br>LA <em>CABINA.</em></h2><p>Carga tu IR WAV favorita. Ajusta el amplificador y termina de darle forma con Presence, Resonance y los filtros de cabina.</p><a class="text-link" href="https://github.com/cirocamano/open5150#cabinas-e-ir">Conocer el cargador de IR <span aria-hidden="true">↗</span></a></div>
-        <div class="signal-chain" aria-label="Cadena de señal: entrada, noise gate, amplificador, cabina IR y limitador">
-          <div class="signal-end"><span>↳</span> TU GUITARRA</div>
-          <div class="signal-node"><span>01</span><strong>NOISE GATE</strong><small>El ruido, a raya.</small></div>
-          <div class="signal-node amp-node"><span>02</span><strong>OPEN5150</strong><small>Previo + potencia.</small></div>
-          <div class="signal-node"><span>03</span><strong>TU IR WAV</strong><small>Tu elección de cabina.</small></div>
-          <div class="signal-node"><span>04</span><strong>LIMITADOR</strong><small>Control de picos de salida.</small></div>
-          <div class="signal-end signal-out">TU SONIDO <span>↗</span></div>
+    <section class="cabinet-section" aria-labelledby="cabinet-title">
+      <div class="shell cabinet-inner">
+        <div>
+          <h2 id="cabinet-title">Elige el sonido<br>de tu cabina.</h2>
+          <p>Carga una respuesta a impulsos en formato WAV y ajusta los filtros de graves y agudos. Los controles de micrófono y posición añaden matices mediante ecualización.</p>
+          <a class="text-link" href="https://github.com/cirocamano/open5150#cabinas-e-ir">Consultar los detalles del cargador de IR <span aria-hidden="true">↗</span></a>
         </div>
+        <dl class="ir-specs">
+          <div><dt>Mono o estéreo</dt><dd>Las IR estéreo conservan sus respuestas izquierda y derecha.</dd></div>
+          <div><dt>Remuestreo automático</dt><dd>Adapta tu IR a la frecuencia del motor.</dd></div>
+          <div><dt>Hasta dos segundos</dt><dd>Usa respuestas cortas para reducir el consumo de CPU.</dd></div>
+        </dl>
       </div>
     </section>
 
     <section class="formats shell section-space" id="formatos" aria-labelledby="formats-title">
-      <div class="section-heading"><p class="eyebrow">03 — EN TU ELEMENTO</p><h2 id="formats-title">ÁBRELO.<br>O INTÉGRALO EN LA <em>MEZCLA.</em></h2></div>
-      <div class="format-list">
-        <div class="format-row"><span class="format-type">APP</span><div><h3>Conecta y toca.</h3><p>Aplicación independiente para macOS. Elige tu interfaz, ajusta el buffer y graba tus ideas en WAV.</p></div><span class="format-label">SIN DAW</span></div>
-        <div class="format-row"><span class="format-type">AU</span><div><h3>En tu sesión.</h3><p>Audio Unit con parámetros automatizables y guardado de ajustes en tu host compatible.</p></div><span class="format-label">AUDIO UNIT</span></div>
-        <div class="format-row"><span class="format-type">VST3</span><div><h3>Un lugar en tu cadena.</h3><p>El mismo motor para tu host VST3. Entrada mono, estéreo o mono con salida estéreo.</p></div><span class="format-label">PLUGIN</span></div>
+      <div class="section-heading">
+        <h2 id="formats-title">Toca por tu cuenta<br>o dentro de tu DAW.</h2>
+        <p>El mismo amplificador en tres formatos para macOS. Los plugins permiten automatizar controles y guardar los ajustes en tu sesión.</p>
       </div>
-      <p class="compatibility-note">Para macOS · Compilación desde el código fuente · Instrucciones de instalación en GitHub</p>
+      <div class="format-list">
+        <div class="format-row"><h3>Aplicación</h3><p>Selecciona tu interfaz de audio, ajusta el buffer y graba en WAV sin abrir un DAW.</p></div>
+        <div class="format-row"><h3>Audio Unit</h3><p>Integra OPEN5150 en una sesión de un DAW compatible con AU.</p></div>
+        <div class="format-row"><h3>VST3</h3><p>Úsalo en un host VST3 con entrada mono, estéreo o mono con salida estéreo.</p></div>
+      </div>
     </section>
 
-    <section class="final-cta" aria-labelledby="cta-title"><div class="shell"><p class="eyebrow">MENOS ESPERAS. MÁS MÚSICA.</p><h2 id="cta-title">TOCA EL<br><span>SIGUIENTE RIFF.</span></h2><div class="cta-bottom"><p>El código está abierto.<br>El próximo sonido es tuyo.</p><a class="button button-dark" href="https://github.com/cirocamano/open5150">Ir al repositorio <span aria-hidden="true">↗</span></a></div></div></section>
+    <section class="installation shell" aria-labelledby="installation-title">
+      <div><h2 id="installation-title">Empieza con OPEN5150.</h2><p>Encontrarás el código, los requisitos y los pasos de instalación en el repositorio.</p></div>
+      <a class="button" href="https://github.com/cirocamano/open5150#requisitos">Ver requisitos e instalación <span aria-hidden="true">↗</span></a>
+    </section>
   </main>
 
-  <footer class="shell site-footer"><a class="wordmark" href="#">OPEN<span>5150</span></a><p>Un simulador inspirado en el 5150.</p><div><a href="https://github.com/cirocamano/open5150/blob/main/LICENSE">MIT</a><a href="https://github.com/cirocamano/open5150">GitHub ↗</a></div></footer>
+  <footer class="shell site-footer">
+    <a class="wordmark" href="#">OPEN<span>5150</span></a>
+    <p>Simulador inspirado en el 5150.</p>
+    <div><a href="https://github.com/cirocamano/open5150/blob/main/LICENSE">Licencia MIT</a><a href="https://github.com/cirocamano/open5150">GitHub <span aria-hidden="true">↗</span></a></div>
+  </footer>
 </body>
 </html>

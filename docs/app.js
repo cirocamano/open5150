@@ -2,19 +2,16 @@
 
 const channels = {
   lead: {
-    kicker: '01 / ALTA GANANCIA',
-    title: 'Un riff más.\nY otro más.',
-    description: 'Ganancia, sustain y una voz hecha para riffs pesados y leads al frente. Sube el Pre y encuentra tu punto de saturación.'
+    title: 'Alta ganancia',
+    description: 'Para riffs pesados y solos con sustain. Ajusta Pre Gain para encontrar el nivel de saturación y Post Gain para controlar la salida.'
   },
   crunch: {
-    kicker: '02 / CRUNCH',
-    title: 'El punto justo\nde ruptura.',
-    description: 'Acordes con cuerpo y una saturación que invita a atacar las cuerdas. Ajusta el Pre para encontrar el equilibrio entre definición y empuje.'
+    title: 'Saturación con cuerpo',
+    description: 'Para acordes y ritmos con más empuje. Ajusta Pre Gain para encontrar el equilibrio entre definición y saturación.'
   },
   clean: {
-    kicker: '03 / LIMPIO',
-    title: 'Deja respirar\na las cuerdas.',
-    description: 'El lado limpio del amplificador. Baja la ganancia, explora los matices de tu guitarra y usa Bright para sumar brillo.'
+    title: 'Sonidos limpios',
+    description: 'Para explorar los matices de tu guitarra con menos saturación. Usa Bright para añadir brillo y la ecualización para ajustar el tono.'
   }
 };
 
@@ -22,11 +19,9 @@ const buttons = document.querySelectorAll('[data-channel]');
 buttons.forEach(button => {
   button.addEventListener('click', () => {
     const mode = button.dataset.channel;
-    const channel = channels[mode];
     buttons.forEach(item => item.setAttribute('aria-pressed', String(item === button)));
-    document.querySelector('.amp-stage').dataset.mode = mode;
-    document.getElementById('channel-kicker').textContent = channel.kicker;
-    document.getElementById('channel-title').textContent = channel.title;
-    document.getElementById('channel-description').textContent = channel.description;
+    document.getElementById('channel-story').dataset.mode = mode;
+    document.getElementById('channel-title').textContent = channels[mode].title;
+    document.getElementById('channel-description').textContent = channels[mode].description;
   });
 });
